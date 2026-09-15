@@ -447,6 +447,56 @@ footer {
 .continue-chapter:hover { color: white; }
 .continue-chapter span { color: var(--soul); padding-left: 6px; }
 .backup-note { margin-top: 30px; color: #4e4d56; font-size: 8px; letter-spacing: .08em; }
+.save-location {
+  width: min(100%, 600px);
+  margin: 22px auto 0;
+  padding: 14px;
+  border: 1px solid #292832;
+  background: rgba(7, 7, 13, .82);
+  text-align: left;
+}
+.save-location-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.save-location-head strong { color: #d2ceda; font-size: 9px; letter-spacing: .16em; }
+.save-location-head span { color: #666570; font-size: 8px; letter-spacing: .11em; }
+.save-os-tabs { display: flex; gap: 5px; margin: 11px 0 8px; }
+.save-os-tabs button {
+  min-height: 27px;
+  padding: 0 10px;
+  border: 1px solid #302f39;
+  background: transparent;
+  color: #666570;
+  font-size: 8px;
+  letter-spacing: .08em;
+  cursor: pointer;
+}
+.save-os-tabs button:hover,
+.save-os-tabs button[aria-pressed='true'] { border-color: #85818f; color: white; background: #17161e; }
+.save-command {
+  display: block;
+  overflow-x: auto;
+  padding: 10px 11px;
+  border: 1px solid #24232c;
+  background: #05050a;
+  color: #aaa6b4;
+  font: 9px/1.4 'DM Mono', monospace;
+  white-space: nowrap;
+  user-select: all;
+}
+.save-location-actions { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 12px; margin-top: 9px; }
+.save-location-actions button {
+  min-height: 29px;
+  padding: 0 12px;
+  border: 1px solid #575461;
+  background: #13121a;
+  color: #d2ceda;
+  font-size: 8px;
+  letter-spacing: .1em;
+  cursor: pointer;
+}
+.save-location-actions button:hover { border-color: white; color: white; }
+.save-location-actions button:disabled { cursor: wait; opacity: .55; }
+.save-location-status { color: #575660; font-size: 7px; line-height: 1.45; letter-spacing: .08em; }
+
 
 .final-stage { padding-top: 120px; align-items: start; }
 .final-shell { width: min(100%, 760px); text-align: center; }
@@ -492,6 +542,11 @@ footer {
   .memory-facts p { line-height: 1.7; }
   .file-orbit { scale: .78; margin-block: -8px 2px; }
   .download-shell h1 { font-size: 22px; }
+  .save-location { padding: 12px; }
+  .save-location-head { align-items: start; flex-direction: column; gap: 4px; }
+  .save-os-tabs { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .save-os-tabs button { padding-inline: 5px; }
+  .save-location-actions { grid-template-columns: 1fr; gap: 7px; }
   .final-copy p, .final-decision p { margin-bottom: 38vh; }
 }
 

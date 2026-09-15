@@ -576,6 +576,97 @@ function acceptChapter() {
   persist(); state.mode = 'download'; render();
 }
 
+const SAVE_LOCATIONS = {
+  windows: {
+    label: 'WINDOWS',
+    command: 'explorer "%LOCALAPPDATA%\\DELTARUNE"',
+    hint: 'PRESS WIN + R · PASTE · ENTER',
+  },
+  macos: {
+    label: 'MACOS',
+    command: 'open "$HOME/Library/Application Support/com.tobyfox.deltarune"',
+    hint: 'OPEN TERMINAL · PASTE · RETURN',
+  },
+  linux: {
+    label: 'LINUX / STEAM DECK',
+    command: 'xdg-open "$HOME/.steam/steam/steamapps/compatdata/1671210/pfx/drive_c/users/steamuser/AppData/Local/DELTARUNE"',
+    hint: 'OPEN TERMINAL · PASTE · ENTER · DEFAULT STEAM PATH',
+  },
+};
+
+function visitorSavePlatform() {
+  const userAgent = navigator.userAgent.toLowerCase();
+  if (/android|iphone|ipad|ipod/.test(userAgent)) return null;
+  const platform = (navigator.userAgentData?.platform || navigator.platform || userAgent).toLowerCase();
+  if (platform.includes('win')) return 'windows';
+  if (platform.includes('mac')) return 'macos';
+  if (/linux|x11/.test(platform)) return 'linux';
+  return null;
+}
+
+function saveLocationGuide() {
+  const detected = visitorSavePlatform();
+  const platform = detected ?? 'windows';
+  const location = SAVE_LOCATIONS[platform];
+  const tabs = Object.entries(SAVE_LOCATIONS).map(([id, item]) => `
+    <button data-save-os="${id}" aria-pressed="${id === platform}">${item.label}</button>`).join('');
+  return `<aside class="save-location" data-save-platform="${platform}" data-detected-platform="${detected ?? ''}">
+    <div class="save-location-head"><strong>SAVE DIRECTORY</strong><span class="save-location-system">${detected ? `${location.label} DETECTED` : 'SELECT YOUR SYSTEM'}</span></div>
+    <div class="save-os-tabs" aria-label="Operating system">${tabs}</div>
+    <code class="save-command">${escapeHtml(location.command)}</code>
+    <div class="save-location-actions">
+      <button data-action="copy-save-command">COPY OPEN COMMAND</button>
+      <span class="save-location-status" aria-live="polite">${location.hint}</span>
+    </div>
+  </aside>`;
+}
+
+async function copyText(text) {
+  if (navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      // Fall through for browsers that expose but deny the Clipboard API.
+    }
+  }
+  const input = document.createElement('textarea');
+  input.value = text;
+  input.style.position = 'fixed';
+  input.style.opacity = '0';
+  document.body.append(input);
+  input.select();
+  const copied = document.execCommand('copy');
+  input.remove();
+  return copied;
+}
+
+function bindSaveLocationGuide() {
+  const guide = app.querySelector('.save-location');
+  if (!guide) return;
+  const command = guide.querySelector('.save-command');
+  const system = guide.querySelector('.save-location-system');
+  const status = guide.querySelector('.save-location-status');
+  const copyButton = guide.querySelector('[data-action="copy-save-command"]');
+  const updatePlatform = (platform) => {
+    const location = SAVE_LOCATIONS[platform];
+    guide.dataset.savePlatform = platform;
+    command.textContent = location.command;
+    system.textContent = `${location.label}${guide.dataset.detectedPlatform === platform ? ' DETECTED' : ''}`;
+    status.textContent = location.hint;
+    copyButton.textContent = 'COPY OPEN COMMAND';
+    guide.querySelectorAll('[data-save-os]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.saveOs === platform)));
+  };
+  guide.querySelectorAll('[data-save-os]').forEach((button) => button.addEventListener('click', () => updatePlatform(button.dataset.saveOs)));
+  copyButton.addEventListener('click', async () => {
+    copyButton.disabled = true;
+    const copied = await copyText(command.textContent);
+    copyButton.disabled = false;
+    copyButton.textContent = copied ? 'COMMAND COPIED' : 'COPY FAILED';
+    status.textContent = copied ? 'PASTE IT WHERE SHOWN · THEN PRESS ENTER' : 'SELECT THE COMMAND ABOVE AND COPY IT MANUALLY';
+  });
+}
+
 function renderDownload() {
   const chapter = state.chapter;
   const fileIndex = state.selectedSlot + 2;
@@ -587,9 +678,11 @@ function renderDownload() {
     <div class="slot-picker"><span>SAVE SLOT</span>${[1, 2, 3].map((slot) => `<button class="${state.selectedSlot === slot ? 'selected' : ''}" data-slot="${slot}">${slot}</button>`).join('')}</div>
     <button class="download-button" data-action="download"><span>↓</span><strong>DOWNLOAD CHAPTER ${chapter} FILE</strong><small>filech${chapter}_${fileIndex}${chapter === 5 && isWeirdEnding() ? '_b' : ''}</small></button>
     <p class="download-status" aria-live="polite">${state.downloaded ? `FILE CREATED: ${state.downloaded}` : 'PC / MAC / LINUX · PLAIN SAVE DATA'}</p>
+    ${saveLocationGuide()}
     <button class="continue-chapter" data-action="next">${nextLabel} <span>→</span></button>
     <p class="backup-note">BACK UP YOUR SAVE DIRECTORY BEFORE REPLACING A FILE.</p>
   </section>`, 'download-stage');
+  bindSaveLocationGuide();
   app.querySelectorAll('[data-slot]').forEach((button) => button.addEventListener('click', () => { state.selectedSlot = Number(button.dataset.slot); persist(); render(); }));
   app.querySelector('[data-action="download"]').addEventListener('click', () => { state.downloaded = downloadCompletion(chapter, state.selectedSlot, state.answers); render(); });
   app.querySelector('[data-action="next"]').addEventListener('click', () => {
@@ -639,9 +732,11 @@ function renderFinalDownload() {
     <div class="slot-picker"><span>SAVE SLOT</span>${[1, 2, 3].map((slot) => `<button class="${state.selectedSlot === slot ? 'selected' : ''}" data-slot="${slot}">${slot}</button>`).join('')}</div>
     <button class="download-button" data-action="download"><span>↓</span><strong>DOWNLOAD CHAPTER 5 FILE</strong><small>filech5_${fileIndex}${isWeirdEnding() ? '_b' : ''}</small></button>
     <p class="download-status" aria-live="polite">${state.downloaded ? `FILE CREATED: ${state.downloaded}` : 'THE RECONSTRUCTION IS COMPLETE'}</p>
+    ${saveLocationGuide()}
     <button class="continue-chapter" data-action="review-all">REVIEW THIS HISTORY <span>↺</span></button>
     <p class="backup-note">BACK UP YOUR SAVE DIRECTORY BEFORE REPLACING A FILE.</p>
   </section>`, 'download-stage');
+  bindSaveLocationGuide();
   app.querySelectorAll('[data-slot]').forEach((button) => button.addEventListener('click', () => { state.selectedSlot = Number(button.dataset.slot); persist(); render(); }));
   app.querySelector('[data-action="download"]').addEventListener('click', () => { state.downloaded = downloadCompletion(5, state.selectedSlot, state.answers); render(); });
   app.querySelector('[data-action="review-all"]').addEventListener('click', () => { state.mode = 'summary'; state.chapter = 1; render(); });
