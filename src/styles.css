@@ -97,6 +97,7 @@ button { color: inherit; }
 
 .wordmark { justify-self: start; font-weight: 700; }
 .wordmark:hover { color: white; }
+.wordmark[hidden] { display: none; }
 
 .music-toggle {
   justify-self: end;
@@ -111,6 +112,7 @@ button { color: inherit; }
   letter-spacing: .12em;
   cursor: pointer;
 }
+.music-toggle[hidden] { display: none; }
 
 .music-toggle b { font-weight: 400; }
 
@@ -240,6 +242,9 @@ footer {
 .sigil.small::after { top: 10px; right: 10px; box-shadow: -35px 35px 0 var(--ink); }
 .resume-panel h1 { margin-bottom: 40px; }
 .resume-actions { width: min(100%, 460px); margin: auto; display: grid; gap: 12px; }
+.sound-panel h1 { min-height: 0; font-size: clamp(19px, 2.45vw, 34px); line-height: 1.42; }
+.sound-panel .resume-actions { margin-top: 34px; }
+.sound-panel .choice:disabled { cursor: wait; opacity: .55; }
 
 .survey-shell { width: min(100%, 1020px); align-self: center; }
 .section-label { display: flex; justify-content: space-between; color: #72727d; font-size: 9px; letter-spacing: .23em; margin-bottom: 12px; }

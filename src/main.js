@@ -1,11 +1,12 @@
 import './styles.css';
 import { downloadCompletion, eggCount, shadowCount, RECRUIT_NAMES } from './save-generator.js';
 import { mountVoidShader } from './void-shader.js';
-import { armMusicOnFirstGesture, bindMusicControl } from './music-player.js';
+import { bindMusicControl, resumeMusicOnFirstGesture, startMusic, stopMusic } from './music-player.js';
 const BASE_URL = import.meta.env.BASE_URL;
 
 const app = document.querySelector('#app');
 const STORAGE_KEY = 'gonermaker-history-v1';
+const SOUND_KEY = 'gonermaker-sound-v1';
 
 const option = (label, value, hint = '') => ({ label, value, hint });
 const yesNo = [option('YES', 'yes'), option('NO', 'no')];
@@ -137,8 +138,10 @@ function recruitDetail(chapter) {
 }
 
 const saved = loadState();
+const storedSound = localStorage.getItem(SOUND_KEY);
+const savedSound = storedSound === 'sound' || storedSound === 'silent' ? storedSound : null;
 const state = {
-  mode: saved ? 'resume' : 'intro',
+  mode: savedSound ? (saved ? 'resume' : 'intro') : 'sound',
   chapter: saved?.chapter ?? 0,
   index: 0,
   introIndex: 0,
@@ -148,6 +151,9 @@ const state = {
   afterMessage: '',
   selectedSlot: saved?.selectedSlot ?? 1,
   downloaded: null,
+  soundPreference: savedSound,
+  soundResponse: '',
+  soundNextMode: saved ? 'resume' : 'intro',
 };
 
 function loadState() {
@@ -174,9 +180,9 @@ function layout(content, extraClass = '') {
       <div class="shader-vignette"></div>
     </div>
     <header class="topbar">
-      <button class="wordmark" data-action="home" aria-label="Return to opening">GONER MAKER</button>
+      <button class="wordmark" data-action="home" aria-label="Return to opening" ${state.mode === 'sound' ? 'hidden' : ''}>GONER MAKER</button>
       <div class="chapter-track" aria-label="Chapter progress">${chapterDots}</div>
-      <button class="music-toggle" data-action="music" aria-label="Toggle background music" aria-pressed="false">
+      <button class="music-toggle" data-action="music" aria-label="Toggle background music" aria-pressed="false" ${state.mode === 'sound' ? 'hidden' : ''}>
         <span class="music-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
         <b>MUSIC OFF</b>
       </button>
@@ -189,9 +195,52 @@ function layout(content, extraClass = '') {
 
 function bindGlobalActions() {
   mountVoidShader(app.querySelector('.void-shader'));
-  bindMusicControl(app.querySelector('[data-action="music"]'));
-  armMusicOnFirstGesture(app);
+  bindMusicControl(app.querySelector('[data-action="music"]'), (preference) => {
+    state.soundPreference = preference;
+    localStorage.setItem(SOUND_KEY, preference);
+  });
+  if (state.soundPreference === 'sound') resumeMusicOnFirstGesture(app);
   app.querySelector('[data-action="home"]')?.addEventListener('click', () => { state.mode = 'intro'; state.chapter = 0; state.index = 0; state.introIndex = 0; render(); });
+}
+
+function renderSoundChoice() {
+  layout(`<section class="dialogue opening-panel sound-panel">
+    <p class="kicker">CONNECTION</p>
+    <h1>BEFORE WE BEGIN...<br><br>SOUND WILL<br>COMPLETE<br>THE CONNECTION.<br><br>SHALL WE<br>PROCEED WITH IT?</h1>
+    <div class="resume-actions">
+      <button class="choice primary" data-sound="sound"><span class="soul">♥</span>YES</button>
+      <button class="choice" data-sound="silent"><span class="soul">♥</span>NO</button>
+    </div>
+  </section>`, 'intro-stage');
+  app.querySelectorAll('[data-sound]').forEach((button) => button.addEventListener('click', async () => {
+    app.querySelectorAll('[data-sound]').forEach((choice) => { choice.disabled = true; });
+    let preference = button.dataset.sound;
+    if (preference === 'sound' && !(await startMusic())) preference = 'unavailable';
+    if (preference !== 'sound') stopMusic();
+    state.soundPreference = preference === 'sound' ? 'sound' : 'silent';
+    state.soundResponse = preference;
+    localStorage.setItem(SOUND_KEY, state.soundPreference);
+    state.mode = 'sound-response';
+    render();
+  }));
+}
+
+function renderSoundResponse() {
+  const response = state.soundResponse === 'sound'
+    ? 'EXCELLENT.\n\nTHE CONNECTION\nIS COMPLETE.'
+    : state.soundResponse === 'unavailable'
+      ? 'THE CONNECTION\nCOULD NOT BE HEARD.\n\nWE WILL CONTINUE\nIN SILENCE.'
+      : 'UNDERSTOOD.\n\nWE WILL CONTINUE\nIN SILENCE.';
+  layout(`<section class="dialogue opening-panel sound-panel">
+    <p class="kicker">CONNECTION</p>
+    <h1>${formatText(response)}</h1>
+    <button class="continue-prompt" data-action="continue">CONTINUE <span>↵</span></button>
+  </section>`, 'intro-stage');
+  app.querySelector('[data-action="continue"]').addEventListener('click', () => {
+    state.mode = state.soundNextMode;
+    if (state.mode === 'intro') state.introIndex = 2;
+    render();
+  });
 }
 
 function renderIntro() {
@@ -600,7 +649,7 @@ function renderFinalDownload() {
 
 function resetHistory() {
   localStorage.removeItem(STORAGE_KEY);
-  Object.assign(state, { mode: 'intro', chapter: 0, index: 0, introIndex: 0, answers: {}, completed: [], editing: false, afterMessage: '', selectedSlot: 1, downloaded: null });
+  Object.assign(state, { mode: state.soundPreference ? 'intro' : 'sound', chapter: 0, index: 0, introIndex: 0, answers: {}, completed: [], editing: false, afterMessage: '', selectedSlot: 1, downloaded: null, soundResponse: '' });
   render();
 }
 
@@ -609,7 +658,9 @@ function formatText(text) { return escapeHtml(text).replace(/\n/g, '<br>'); }
 function render() {
   document.onkeydown = null;
   app.className = `chapter-${state.chapter} mode-${state.mode}`;
-  if (state.mode === 'resume') renderResume();
+  if (state.mode === 'sound') renderSoundChoice();
+  else if (state.mode === 'sound-response') renderSoundResponse();
+  else if (state.mode === 'resume') renderResume();
   else if (state.mode === 'intro') renderIntro();
   else if (state.mode === 'survey') renderQuestion();
   else if (state.mode === 'after') renderAfter();
