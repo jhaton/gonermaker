@@ -674,7 +674,7 @@ function renderDownload() {
   layout(`<section class="download-shell">
     <div class="file-orbit" aria-hidden="true"><span class="file-icon"><i></i><b>FILE</b></span><span class="orbit one"></span><span class="orbit two"></span></div>
     <p class="kicker">HISTORY RESTORED</p>
-    <h1>YOUR CHAPTER ${chapter}<br>COMPLETION FILE<br>IS READY.</h1>
+    <h1>YOUR CHAPTER ${chapter}<br>COMPLETION FILE<br>IS WAITING.</h1>
     <div class="slot-picker"><span>SAVE SLOT</span>${[1, 2, 3].map((slot) => `<button class="${state.selectedSlot === slot ? 'selected' : ''}" data-slot="${slot}">${slot}</button>`).join('')}</div>
     <button class="download-button" data-action="download"><span>↓</span><strong>DOWNLOAD CHAPTER ${chapter} FILE</strong><small>filech${chapter}_${fileIndex}${chapter === 5 && isWeirdEnding() ? '_b' : ''}</small></button>
     <p class="download-status" aria-live="polite">${state.downloaded ? `FILE CREATED: ${state.downloaded}` : 'PC / MAC / LINUX · PLAIN SAVE DATA'}</p>
