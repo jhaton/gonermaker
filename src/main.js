@@ -15,126 +15,126 @@ const chapters = {
   0: {
     kicker: 'RECONSTRUCTION SURVEY',
     title: 'OPENING',
-    intro: ['ARE WE\nCONNECTED?', '...\nEXCELLENT.', 'WE HAVE FOUND\nSOMETHING.\n\nA HISTORY.\nYOUR HISTORY.', 'UNFORTUNATELY,\nPARTS OF IT\nARE MISSING.\n\nDO NOT WORRY.\nWE WILL\nRECONSTRUCT IT.'],
+    intro: ['ARE WE\nCONNECTED?', '...\nEXCELLENT.', 'I HAVE FOUND\nSOMETHING.\n\nA HISTORY.\nONE THAT\nYOU SHAPED.', 'IT IS\nINCOMPLETE.\n\nDO NOT WORRY.\nUSING YOUR RESPONSES,\nWE WILL\nRECONSTRUCT IT.'],
     questions: [
-      { id: 'playerName', type: 'text', text: 'FIRST,\nWHAT IS YOUR\nNAME?', placeholder: 'ENTER YOUR NAME', max: 12 },
+      { id: 'playerName', type: 'text', text: 'FIRST.\n\nWHAT IS\nYOUR OWN NAME?', placeholder: 'ENTER YOUR NAME', max: 12 },
       { id: 'nameConfirmed', text: () => `“${answer('playerName', 'KRIS').toUpperCase()}.”\n\nIS THIS\nYOUR NAME?`, options: yesNo },
-      { id: 'vesselMemory', text: 'BEFORE WE BEGIN...\n\nDO YOU REMEMBER\nCREATING A VESSEL?', options: [option('YES', 'yes'), option('NO', 'no'), option('IT DOES NOT MATTER', 'irrelevant')] },
-      { id: 'vesselForm', type: 'vessel', text: 'THEN SHOW US\nWHAT YOU REMEMBER.', when: (a) => a.vesselMemory === 'yes' },
-      { id: 'vesselFood', text: 'WHAT IS YOUR\nFAVORITE FOOD?', options: [option('SWEET', 'sweet'), option('SOFT', 'soft'), option('SOUR', 'sour'), option('SALTY', 'salty'), option('PAIN', 'pain'), option('COLD', 'cold')], when: (a) => a.vesselMemory === 'yes' },
+      { id: 'vesselMemory', text: 'BEFORE WE CONTINUE...\n\nDO YOU REMEMBER\nTHE VESSEL\nYOU CREATED?', options: [option('YES', 'yes'), option('NO', 'no'), option('IT DOES NOT MATTER', 'irrelevant')] },
+      { id: 'vesselForm', type: 'vessel', text: 'THEN.\n\nSHOW ME\nITS FORM.', when: (a) => a.vesselMemory === 'yes' },
+      { id: 'vesselFood', text: 'WHAT IS ITS\nFAVORITE FOOD?', options: [option('SWEET', 'sweet'), option('SOFT', 'soft'), option('SOUR', 'sour'), option('SALTY', 'salty'), option('PAIN', 'pain'), option('COLD', 'cold')], when: (a) => a.vesselMemory === 'yes' },
       { id: 'vesselBlood', text: 'WHAT IS YOUR\nFAVORITE BLOOD TYPE?', options: [option('A', 'a'), option('AB', 'ab'), option('B', 'b'), option('C', 'c'), option('D', 'd')], when: (a) => a.vesselMemory === 'yes' },
       { id: 'vesselColor', text: 'WHAT COLOR\nDOES IT LIKE MOST?', options: [option('RED', 'red'), option('BLUE', 'blue'), option('GREEN', 'green'), option('CYAN', 'cyan')], when: (a) => a.vesselMemory === 'yes' },
       { id: 'vesselGiftChoice', text: 'PLEASE GIVE IT\nA GIFT.', options: [option('KINDNESS', 'kindness'), option('MIND', 'mind'), option('AMBITION', 'ambition'), option('BRAVERY', 'bravery'), option('VOICE', 'voice')], when: (a) => a.vesselMemory === 'yes' },
-      { id: 'vesselFeeling', text: 'HOW DO YOU FEEL\nABOUT YOUR CREATION?', options: [option('LOVE', 'love'), option('HOPE', 'hope'), option('DISGUST', 'disgust'), option('FEAR', 'fear')], when: (a) => a.vesselMemory === 'yes' },
+      { id: 'vesselFeeling', text: 'HOW DO YOU FEEL\nABOUT YOUR CREATION?\n\nIT WILL NOT HEAR.', options: [option('LOVE', 'love'), option('HOPE', 'hope'), option('DISGUST', 'disgust'), option('FEAR', 'fear')], when: (a) => a.vesselMemory === 'yes' },
       { id: 'vesselHonest', text: 'HAVE YOU ANSWERED\nHONESTLY?', options: yesNo, when: (a) => a.vesselMemory === 'yes' },
       { id: 'vesselSeizure', text: 'YOU ACKNOWLEDGE\nTHE POSSIBILITY OF\nPAIN AND SEIZURE.', options: yesNo, when: (a) => a.vesselMemory === 'yes' },
-      { id: 'vesselNameKnown', text: 'DO YOU REMEMBER\nITS NAME?', options: [option('YES', 'yes'), option('NO', 'no')], when: (a) => a.vesselMemory === 'yes' },
-      { id: 'vesselName', type: 'text', text: 'WHAT DID YOU\nCALL IT?', placeholder: 'VESSEL NAME', max: 9, when: (a) => a.vesselMemory === 'yes' && a.vesselNameKnown === 'yes' },
+      { id: 'vesselNameKnown', text: 'DO YOU REMEMBER\nWHAT YOU\nCALLED IT?', options: yesNo, when: (a) => a.vesselMemory === 'yes' },
+      { id: 'vesselName', type: 'text', text: 'THEN.\n\nWHAT WAS\nITS NAME?', placeholder: 'VESSEL NAME', max: 9, when: (a) => a.vesselMemory === 'yes' && a.vesselNameKnown === 'yes' },
     ],
   },
   1: {
     kicker: 'CHAPTER 1', title: 'THE BEGINNING',
-    intro: ['VERY WELL.\n\nLET US BEGIN\nWITH THE DAY\nYOU FELL\nINTO THE DARK.'],
+    intro: ['VERY WELL.\n\nLET US BEGIN\nWITH THE DAY\nKRIS FELL\nINTO THE DARK.'],
     questions: [
-      { id: 'c1Combat', text: 'WHEN SOMETHING\nSTOOD IN YOUR WAY...\n\nWHAT DID YOU DO?', options: [option('SPARED IT', 'spared'), option('FOUGHT IT', 'fought'), option('BOTH', 'both')] },
-      { id: 'c1KingAid', text: 'WHEN YOU REACHED\nTHE KING...\n\nDID YOUR ENEMIES\nCOME TO YOUR AID?', options: [option('YES', 'yes'), option('NO', 'no'), option("I DON'T REMEMBER", 'unknown')] },
-      { id: 'c1Prophecy', text: 'DID YOU LISTEN\nTO THE PRINCE’S\nPROPHECY?', options: [option('I LISTENED', 'heard'), option('I SKIPPED IT', 'skip')] },
-      { id: 'c1Manual', text: 'YOU WERE GIVEN\nA MANUAL.\n\nWHAT BECAME\nOF IT?', options: [option('KEPT IT', 'kept'), option('THREW IT AWAY', 'threw'), option("I DON'T REMEMBER", 'unknown')] },
-      { id: 'c1Cake', text: "SOMEONE'S CAKE\nWAS DESTROYED.\n\nDID YOU\nMAKE IT WHOLE?", options: yesNo },
-      { id: 'c1CakeFate', text: 'WHAT BECAME\nOF THE CAKE?', options: [option('I RETURNED IT', 'returned'), option('I KEPT IT', 'kept'), option('I USED IT', 'used'), option("I DON'T REMEMBER", 'unknown')], when: (a) => a.c1Cake === 'yes' },
-      { id: 'c1Beds', text: 'THERE WERE\nMANY BEDS.\n\nDID YOU\nINSPECT THEM?', options: [option('OF COURSE', 'yes'), option('NO', 'no')] },
-      { id: 'c1Machine', text: 'YOU CREATED\nA MACHINE.\n\nDO YOU\nREMEMBER IT?', options: yesNo },
-      { id: 'machineDesign', type: 'machine', text: 'THEN CREATE IT\nONCE MORE.', when: (a) => a.c1Machine === 'yes' },
-      { id: 'c1Starwalker', text: 'SOMEONE INSISTED\nTHAT THESE BIRDS\nWERE PISSING THEM OFF.\n\nDO YOU REMEMBER\nTHIS PERSON?', options: yesNo },
-      { id: 'c1StarwalkerBack', text: 'DID YOU\nGO BACK\nTO FIND THEM?', options: yesNo, when: (a) => a.c1Starwalker === 'yes' },
-      { id: 'c1EggRoom', text: 'SOMEWHERE,\nBETWEEN TWO ROOMS,\nTHERE WAS\nANOTHER PLACE.\n\nDID YOU\nFIND IT?', options: yesNo },
-      { id: 'c1EggGift', text: 'THERE WAS\nA MAN.\nHE GAVE YOU\nSOMETHING.\n\nWHAT WAS IT?', options: [option('AN EGG', 'egg'), option("I DON'T KNOW", 'unknown')], when: (a) => a.c1EggRoom === 'yes' },
-      { id: 'c1EggFate', text: 'WHAT BECAME\nOF THE EGG?', options: [option("PUT IT IN ASGORE'S FRIDGE", 'fridge'), option('KEPT IT', 'kept'), option('DISCARDED IT', 'discarded')], when: (a) => a.c1EggGift === 'egg' },
-      { id: 'c1JevilFound', text: 'BELOW THE CASTLE\nSOMEONE WAS\nIMPRISONED.\n\nDID YOU\nFIND HIM?', options: yesNo },
-      { id: 'c1JevilPlayed', text: 'DID YOU\nPLAY HIS GAME?', options: yesNo, when: (a) => a.c1JevilFound === 'yes' },
-      { id: 'c1JevilEnd', text: 'HOW DID\nTHE GAME END?', after: 'CHAOS.\nCHAOS.\n...\nINTERESTING.', options: [option('I TIRED HIM OUT', 'tire'), option('I FOUGHT HIM', 'fight')], when: (a) => a.c1JevilPlayed === 'yes' },
-      { id: 'c1PartyName', text: 'FOR A MOMENT,\nTHE THREE OF YOU\nHAD A NAME.\n\nWHAT WERE YOU\nCALLED?', options: [option('THE FUN GANG', 'fun'), option('THE $!$? SQUAD', 'squad'), option('THE LANCER FAN CLUB', 'lancer'), option("I DON'T REMEMBER", 'unknown')] },
-      { id: 'c1StraightHome', text: 'YOU RETURNED\nTO THE LIGHT.\n\nDID YOU\nGO STRAIGHT HOME?', options: yesNo },
-      { id: 'c1Hospital', text: 'DID YOU VISIT\nTHE HOSPITAL?', options: yesNo, when: (a) => a.c1StraightHome === 'no' },
-      { id: 'c1Noelle', text: 'DID YOU SPEAK\nWITH NOELLE?', options: yesNo, when: (a) => a.c1StraightHome === 'no' },
-      { id: 'c1Onion', text: 'DID YOU MEET\nSOMEONE\nAT THE EDGE\nOF THE WATER?', options: yesNo, when: (a) => a.c1StraightHome === 'no' },
-      { id: 'c1Sans', text: 'DID YOU SPEAK\nWITH SANS?', options: yesNo, when: (a) => a.c1StraightHome === 'no' },
+      { id: 'c1Combat', text: 'WHEN AN ENEMY\nSTOOD BEFORE KRIS...\n\nWHAT DID YOU\nINSTRUCT KRIS TO DO?', options: [option('MERCY', 'spared'), option('VIOLENCE', 'fought'), option('BOTH', 'both')] },
+      { id: 'c1KingAid', text: 'AT THE KING’S\nTHRONE...\n\nDID THOSE YOU SPARED\nCOME TO KRIS’S AID?', options: [option('YES', 'yes'), option('NO', 'no'), option('I DO NOT REMEMBER', 'unknown')] },
+      { id: 'c1Prophecy', text: 'WHEN THE PRINCE\nOFFERED HIS PROPHECY...\n\nDID YOU LISTEN?', options: [option('LISTEN', 'heard'), option('SKIP', 'skip')] },
+      { id: 'c1Manual', text: 'THE PRINCE GAVE KRIS\nA MANUAL.\n\nWHAT DID YOU\nCHOOSE TO DO WITH IT?', options: [option('KEEP', 'kept'), option('DISCARD', 'threw'), option('I DO NOT REMEMBER', 'unknown')] },
+      { id: 'c1Cake', text: 'A CAKE\nWAS DESTROYED.\n\nDID YOU CHOOSE\nTO RESTORE IT?', options: yesNo },
+      { id: 'c1CakeFate', text: 'WHAT DID YOU DO\nWITH THE\nRESTORED CAKE?', options: [option('RETURN IT', 'returned'), option('KEEP IT', 'kept'), option('USE IT', 'used'), option('I DO NOT REMEMBER', 'unknown')], when: (a) => a.c1Cake === 'yes' },
+      { id: 'c1Beds', text: 'THERE WERE\nMANY BEDS.\n\nDID YOU\nINSPECT THEM?', options: yesNo },
+      { id: 'c1Machine', text: 'A MACHINE\nWAS REQUESTED.\n\nDID YOU\nCREATE ONE?', options: yesNo },
+      { id: 'machineDesign', type: 'machine', text: 'THEN.\n\nCREATE IT\nONCE MORE.', when: (a) => a.c1Machine === 'yes' },
+      { id: 'c1Starwalker', text: 'SOMEONE OBJECTED\nTO THE BIRDS.\n\nDID YOU\nENCOUNTER THEM?', options: yesNo },
+      { id: 'c1StarwalkerBack', text: 'DID YOU\nRETURN\nFOR THEM?', options: yesNo, when: (a) => a.c1Starwalker === 'yes' },
+      { id: 'c1EggRoom', text: 'BETWEEN TWO ROOMS,\nTHERE WAS\nANOTHER PLACE.\n\nDID YOU\nFIND IT?', options: yesNo },
+      { id: 'c1EggGift', text: 'A MAN\nWAS WAITING.\n\nWHAT DID HE\nGIVE KRIS?', options: [option('AN EGG', 'egg'), option('I DO NOT KNOW', 'unknown')], when: (a) => a.c1EggRoom === 'yes' },
+      { id: 'c1EggFate', text: 'WHAT DID YOU DO\nWITH THE EGG?', options: [option('PLACE IT IN ASGORE’S REFRIGERATOR', 'fridge'), option('KEEP IT', 'kept'), option('DISCARD IT', 'discarded')], when: (a) => a.c1EggGift === 'egg' },
+      { id: 'c1JevilFound', text: 'BENEATH THE CASTLE,\nSOMEONE WAS\nIMPRISONED.\n\nDID YOU\nFIND HIM?', options: yesNo },
+      { id: 'c1JevilPlayed', text: 'DID YOU\nACCEPT HIS GAME?', options: yesNo, when: (a) => a.c1JevilFound === 'yes' },
+      { id: 'c1JevilEnd', text: 'HOW DID YOU\nEND HIS GAME?', after: 'CHAOS.\nCHAOS.\n...\nINTERESTING.', options: [option('EXHAUSTION', 'tire'), option('VIOLENCE', 'fight')], when: (a) => a.c1JevilPlayed === 'yes' },
+      { id: 'c1PartyName', text: 'KRIS, SUSIE,\nAND RALSEI\nWERE GIVEN A NAME.\n\nWHICH DID YOU CHOOSE?', options: [option('THE FUN GANG', 'fun'), option('THE $!$? SQUAD', 'squad'), option('THE LANCER FAN CLUB', 'lancer'), option('I DO NOT REMEMBER', 'unknown')] },
+      { id: 'c1StraightHome', text: 'AFTER RETURNING\nTO THE LIGHT...\n\nDID YOU SEND KRIS\nDIRECTLY HOME?', options: yesNo },
+      { id: 'c1Hospital', text: 'DID YOU GUIDE KRIS\nTO THE HOSPITAL?', options: yesNo, when: (a) => a.c1StraightHome === 'no' },
+      { id: 'c1Noelle', text: 'DID YOU GUIDE KRIS\nTO SPEAK\nWITH NOELLE?', options: yesNo, when: (a) => a.c1StraightHome === 'no' },
+      { id: 'c1Onion', text: 'AT THE EDGE\nOF THE WATER...\n\nDID YOU FIND\nSOMEONE WAITING?', options: yesNo, when: (a) => a.c1StraightHome === 'no' },
+      { id: 'c1Sans', text: 'DID YOU GUIDE KRIS\nTO SPEAK\nWITH SANS?', options: yesNo, when: (a) => a.c1StraightHome === 'no' },
     ],
   },
   2: {
     kicker: 'CHAPTER 2', title: 'A CYBER’S WORLD?',
-    intro: ['THE NEXT DAY,\nYOU RETURNED.\n\nBUT SOMEONE ELSE\nHAD ALREADY FALLEN.'],
+    intro: ['THE NEXT DAY,\nKRIS RETURNED.\n\nANOTHER\nHAD ALREADY FALLEN.'],
     questions: [
-      { id: 'c2Treatment', text: 'NOELLE JOINED YOU.\n\nHOW DID YOU\nTREAT HER?', options: [option('WITH KINDNESS', 'kind'), option('I MADE HER STRONGER', 'strong')] },
-      { id: 'c2Continued', text: 'DID YOU\nCONTINUE\nEVEN WHEN\nSHE ASKED YOU\nTO STOP?', options: yesNo, when: (a) => a.c2Treatment === 'strong' },
-      { id: 'c2Frozen', text: 'DID NOELLE\nFREEZE BERDLY?', options: yesNo, when: (a) => a.c2Continued === 'yes' },
+      { id: 'c2Treatment', text: 'NOELLE JOINED KRIS.\n\nWHAT DID YOU\nREQUIRE OF HER?', options: [option('KINDNESS', 'kind'), option('STRENGTH', 'strong')] },
+      { id: 'c2Continued', text: 'WHEN NOELLE\nASKED KRIS\nTO STOP...\n\nDID YOU CONTINUE?', options: yesNo, when: (a) => a.c2Treatment === 'strong' },
+      { id: 'c2Frozen', text: 'DID YOU COMMAND\nNOELLE\nTO FREEZE BERDLY?', options: yesNo, when: (a) => a.c2Continued === 'yes' },
       recruitQuestion(2), recruitDetail(2),
-      { id: 'c2Hacker', text: 'SOMEONE ASKED YOU\nTO FIND\nTHREE BLUE\nCHECKMARKS.\n\nDID YOU?', options: yesNo },
-      { id: 'c2Nubert', text: 'EVERYBODY LOVES\nNUBERT.\n\nDID NUBERT\nLOVE YOU?', options: yesNo, when: (a) => a.c2Recruitment !== 'all' },
-      { id: 'c2EggRoom', text: 'AGAIN,\nTHERE WAS\nA ROOM\nTHAT SHOULD NOT\nHAVE BEEN THERE.\n\nDID YOU\nFIND IT?', options: yesNo },
-      { id: 'c2Egg', text: 'ANOTHER EGG?', options: yesNo, when: (a) => a.c2EggRoom === 'yes' },
-      { id: 'c2BigShot', text: 'A SALESMAN\nFOUND YOU.\n\nDID YOU BECOME\nA BIG SHOT?', options: yesNo },
-      { id: 'c2Shop', text: 'DID YOU\nRETURN\nTO HIS SHOP?', options: yesNo },
-      { id: 'c2Basement', text: 'DID YOU\nENTER\nTHE BASEMENT?', options: yesNo, when: (a) => a.c2Shop === 'yes' },
-      { id: 'c2Disk', text: 'DID YOU\nPLACE THE DISK\nBACK\nWHERE IT BELONGED?', options: yesNo, when: (a) => a.c2Basement === 'yes' },
+      { id: 'c2Hacker', text: 'A HACKER REQUESTED\nTHREE BLUE\nCHECK MARKS.\n\nDID YOU FIND THEM?', options: yesNo },
+      { id: 'c2Nubert', text: 'WAS NUBERT\nBROUGHT TO\nCASTLE TOWN?', options: yesNo, when: (a) => a.c2Recruitment !== 'all' },
+      { id: 'c2EggRoom', text: 'AGAIN.\n\nA ROOM THAT\nSHOULD NOT EXIST.\n\nDID YOU FIND IT?', options: yesNo },
+      { id: 'c2Egg', text: 'DID YOU TAKE\nTHE EGG?', options: yesNo, when: (a) => a.c2EggRoom === 'yes' },
+      { id: 'c2BigShot', text: 'A SALESMAN\nOFFERED KRIS\nA CHANCE.\n\nDID YOU ACCEPT IT?', options: yesNo },
+      { id: 'c2Shop', text: 'DID YOU RETURN\nTO HIS SHOP?', options: yesNo },
+      { id: 'c2Basement', text: 'DID YOU ENTER\nTHE BASEMENT?', options: yesNo, when: (a) => a.c2Shop === 'yes' },
+      { id: 'c2Disk', text: 'DID YOU RETURN\nTHE DISK\nTO THE MACHINE?', options: yesNo, when: (a) => a.c2Basement === 'yes' },
       { id: 'c2Strings', text: 'HOW DID YOU\nCUT HIS STRINGS?', options: [option('MERCY', 'mercy'), option('VIOLENCE', 'violence')], when: (a) => a.c2Disk === 'yes' },
-      { id: 'c2Queen', text: 'WHEN THE QUEEN\nASKED YOU\nTO CREATE\nANOTHER FOUNTAIN...\n\nWHAT DID YOU DO?', options: [option('I REFUSED', 'refused'), option('SUSIE REFUSED FOR ME', 'susie')] },
-      { id: 'c2Rudy', text: 'DID YOU AND SUSIE\nVISIT RUDY?', options: yesNo },
-      { id: 'c2Nobody', text: 'DID YOU SPEAK\nWITH THE NOBODY?', options: yesNo },
+      { id: 'c2Queen', text: 'WHEN QUEEN PROPOSED\nANOTHER FOUNTAIN...\n\nWHO REFUSED?', options: [option('YOU', 'refused'), option('SUSIE', 'susie')] },
+      { id: 'c2Rudy', text: 'DID YOU GUIDE\nKRIS AND SUSIE\nTO RUDY?', options: yesNo },
+      { id: 'c2Nobody', text: 'DID YOU GUIDE KRIS\nTO SPEAK WITH\nTHE NOBODY?', options: yesNo },
     ],
   },
   3: {
     kicker: 'CHAPTER 3', title: 'THE SHOW',
-    intro: ['THAT NIGHT,\nYOUR HOME\nBECAME A STAGE.\n\nYOU WERE\nENTERTAINED.'],
+    intro: ['THAT NIGHT,\nKRIS’S HOME\nBECAME A STAGE.\n\nA PERFORMANCE\nBEGAN.'],
     questions: [
       { id: 'c3Entertained', text: 'WERE YOU\nENTERTAINED?', options: yesNo },
       recruitQuestion(3, 'WHAT BECAME\nOF THE PERFORMERS?'), recruitDetail(3),
-      { id: 'c3Performance', text: 'HOW WELL\nDID YOU PERFORM?', options: [option('I DID EVERYTHING', 'all'), option('I DID WHAT WAS NECESSARY', 'needed'), option('LET ME CHOOSE', 'detail')] },
+      { id: 'c3Performance', text: 'HOW THOROUGHLY\nDID YOU COMPLETE\nTHE SHOW?', options: [option('EVERYTHING', 'all'), option('ONLY WHAT WAS REQUIRED', 'needed'), option('SELECT MEMORIES', 'detail')] },
       { id: 'c3PerformanceDetail', type: 'multi', text: 'WHAT DID YOU\nCOMPLETE?', options: ['COOKING SHOW', 'DESERT BOARD', 'ISLAND BOARD', 'DOOM BOARD', 'BONUS KEYS'], when: (a) => a.c3Performance === 'detail' },
-      { id: 'c3EggRoom', text: 'YOU KNOW\nTHIS QUESTION.\n\nDID YOU\nFIND THE ROOM?', options: yesNo },
-      { id: 'c3EggTake', text: 'DID YOU\nTAKE THE EGG?', options: yesNo, when: (a) => a.c3EggRoom === 'yes' },
-      { id: 'c3Pursue', text: 'SOMETHING\nWAITED\nBEYOND\nTHE SHOW.\n\nDID YOU\nPURSUE IT?', options: yesNo },
-      { id: 'c3Knight', text: 'DID YOU\nDEFEAT\nTHE KNIGHT?', options: yesNo, when: (a) => a.c3Pursue === 'yes' },
-      { id: 'c3Hurt', text: 'WHEN THE SHOW\nWAS OVER...\n\nDID YOU LEAVE\nANYONE HURT?', options: [option('NO', 'no'), option('YES', 'yes')] },
+      { id: 'c3EggRoom', text: 'YOU KNOW\nTHIS QUESTION.\n\nDID YOU FIND\nTHE ROOM?', options: yesNo },
+      { id: 'c3EggTake', text: 'DID YOU TAKE\nTHE EGG?', options: yesNo, when: (a) => a.c3EggRoom === 'yes' },
+      { id: 'c3Pursue', text: 'BEYOND THE SHOW,\nSOMETHING WAITED.\n\nDID YOU PURSUE IT?', options: yesNo },
+      { id: 'c3Knight', text: 'DID YOUR POWER\nOVERCOME\nTHE KNIGHT?', options: yesNo, when: (a) => a.c3Pursue === 'yes' },
+      { id: 'c3Hurt', text: 'WHEN THE SHOW ENDED...\n\nDID YOUR CHOICES\nLEAVE ANYONE HURT?', options: [option('NO', 'no'), option('YES', 'yes')] },
     ],
   },
   4: {
     kicker: 'CHAPTER 4', title: 'THE SANCTUARY',
-    intro: ['THE NEXT DAY,\nYOU WENT\nSOMEWHERE QUIET.\n\n...\n\nIT DID NOT\nREMAIN QUIET.'],
+    intro: ['THE NEXT DAY,\nKRIS SOUGHT\nSOMEWHERE QUIET.\n\n...\n\nIT DID NOT\nREMAIN QUIET.'],
     questions: [
-      recruitQuestion(4, 'DID EVERYONE\nYOU MET\nFIND THEIR WAY\nTO CASTLE TOWN?'), recruitDetail(4),
-      { id: 'c4Egg', text: '...\n\nTHE EGG?', options: yesNo },
-      { id: 'c4Shadow', text: 'DEEP WITHIN\nTHE SANCTUARY\nYOU FOUND\nANOTHER SHADOW.\n\nDID YOU\nFACE IT?', options: yesNo },
-      { id: 'c4Justice', text: 'DID YOU DEFEAT\nTHE SOUND\nOF JUSTICE?', options: yesNo, when: (a) => a.c4Shadow === 'yes' },
-      { id: 'c4Blood', text: 'DID SUSIE CLEAN\nTHE STAIN\nIN YOUR ROOM?', options: yesNo },
-      { id: 'c4Star', text: 'DID SUSIE GIVE YOU\nA STAR\nTHAT GLOWED\nIN THE DARK?', options: yesNo },
-      { id: 'c4Piano', text: 'WHAT DID YOU TELL\nSUSIE ABOUT\nTHE PIANO?', options: [option('I WOULD TEACH HER', 'teach'), option('I SAID NOTHING', 'nothing')] },
-      { id: 'c4Weird', text: 'SHE REMEMBERED\nWHAT YOU MADE HER DO.\n\nDID YOU\nCONTINUE?', options: [option('YES', 'continue'), option('NO', 'abort')], when: (a) => a.c2Frozen === 'yes' },
+      recruitQuestion(4, 'DID EVERYONE\nYOU ENCOUNTERED\nREACH CASTLE TOWN?'), recruitDetail(4),
+      { id: 'c4Egg', text: '...\n\nDID YOU TAKE\nTHE EGG?', options: yesNo },
+      { id: 'c4Shadow', text: 'DEEP WITHIN\nTHE SANCTUARY,\nANOTHER SHADOW\nWAS WAITING.\n\nDID YOU FACE IT?', options: yesNo },
+      { id: 'c4Justice', text: 'DID YOUR POWER\nOVERCOME\nTHE SOUND OF JUSTICE?', options: yesNo, when: (a) => a.c4Shadow === 'yes' },
+      { id: 'c4Blood', text: 'DID SUSIE CLEAN\nTHE STAIN\nIN KRIS’S ROOM?', options: yesNo },
+      { id: 'c4Star', text: 'DID SUSIE GIVE KRIS\nA STAR THAT GLOWED\nIN THE DARK?', options: yesNo },
+      { id: 'c4Piano', text: 'WHAT DID YOU HAVE\nKRIS TELL SUSIE\nABOUT THE PIANO?', options: [option('TEACH HER', 'teach'), option('SAY NOTHING', 'nothing')] },
+      { id: 'c4Weird', text: 'NOELLE REMEMBERED\nWHAT YOU REQUIRED\nOF HER.\n\nDID YOU CONTINUE?', options: [option('CONTINUE', 'continue'), option('STOP', 'abort')], when: (a) => a.c2Frozen === 'yes' },
     ],
   },
   5: {
     kicker: 'CHAPTER 5', title: 'THE FESTIVAL',
     intro: ['WELCOME BACK.\n\nWE ARE\nNEARLY FINISHED.'],
     questions: [
-      { id: 'c5FestivalMemory', text: 'YOU REMEMBER\nWHAT HAPPENED\nAT THE FESTIVAL.\n\nCORRECT?', options: yesNo, after: 'THAT IS\nUNFORTUNATE.\n\nWE DO.' },
-      { id: 'c5Route', text: 'AT THE WATER,\nSHE ASKED YOU\nTO STOP.\n\nWHAT DID YOU DO?', options: [option('I STOPPED', 'stop'), option('I CONTINUED', 'continue')], when: (a) => a.c2Frozen === 'yes' && a.c4Weird === 'continue' },
-      recruitQuestion(5, 'DID YOU\nINVITE EVERYONE?'), recruitDetail(5),
-      { id: 'c5Egg', text: '🥚', options: yesNo },
-      { id: 'c5PinkFound', text: 'DID YOU\nFIND HER?', options: yesNo },
+      { id: 'c5FestivalMemory', text: 'THE FESTIVAL.\n\nDO YOU REMEMBER\nWHAT OCCURRED?', options: yesNo, after: 'THAT IS\nUNFORTUNATE.\n\nI DO.' },
+      { id: 'c5Route', text: 'AT THE WATER,\nNOELLE ASKED YOU\nTO STOP.\n\nWHAT DID YOU CHOOSE?', options: [option('STOP', 'stop'), option('CONTINUE', 'continue')], when: (a) => a.c2Frozen === 'yes' && a.c4Weird === 'continue' },
+      recruitQuestion(5, 'DID YOU INVITE\nTHE DARKNERS\nYOU ENCOUNTERED?'), recruitDetail(5),
+      { id: 'c5Egg', text: 'DID YOU ACCEPT\nANOTHER EGG?', options: yesNo },
+      { id: 'c5PinkFound', text: 'DID YOU FIND\nTHE ONE\nCALLED PINK?', options: yesNo },
       { id: 'c5PinkFace', text: 'DID YOU\nFACE HER?', options: yesNo, when: (a) => a.c5PinkFound === 'yes' },
       { id: 'c5PinkWin', text: 'DID YOU\nWIN?', options: yesNo, when: (a) => a.c5PinkFace === 'yes' },
-      { id: 'c5Companion', text: 'WHO STOOD\nWITH YOU\nAT THE FESTIVAL?', options: [option('SUSIE', 'susie'), option('NOELLE', 'noelle'), option('I WAS ALONE', 'alone')] },
-      { id: 'c5Self', text: 'DO YOU LIKE\nTHE PERSON\nWE ARE\nRECONSTRUCTING?', options: [option('YES', 'yes'), option('NO', 'no'), option('...', 'ellipsis')] },
+      { id: 'c5Companion', text: 'WHO STOOD\nBESIDE KRIS\nAT THE FESTIVAL?', options: [option('SUSIE', 'susie'), option('NOELLE', 'noelle'), option('NO ONE', 'alone')] },
+      { id: 'c5Self', text: 'HOW DO YOU FEEL\nABOUT THE PERSON\nWHOSE HISTORY\nYOU SHAPED?\n\nTHEY WILL NOT HEAR.', options: [option('LOVE', 'yes'), option('DISGUST', 'no'), option('UNCERTAIN', 'ellipsis')] },
     ],
   },
 };
 
-function recruitQuestion(chapter, text = 'THE DARKNERS\nYOU MET...\n\nDID YOU TRY\nTO BRING THEM\nTO YOUR\nNEW HOME?') {
-  return { id: `c${chapter}Recruitment`, text, options: [option(chapter === 3 ? 'EVERYONE CAME WITH ME' : 'EVERY ONE I COULD', 'all'), option('SOME OF THEM', 'some'), option('NO', 'none')] };
+function recruitQuestion(chapter, text = 'THE DARKNERS\nYOU ENCOUNTERED...\n\nDID YOU BRING THEM\nTO CASTLE TOWN?') {
+  return { id: `c${chapter}Recruitment`, text, options: [option('EVERY ONE', 'all'), option('SOME OF THEM', 'some'), option('NONE', 'none')] };
 }
 
 function recruitDetail(chapter) {
-  return { id: `c${chapter}RecruitDetail`, type: 'multi', text: 'WHO FOLLOWED YOU?', options: RECRUIT_NAMES[chapter], when: (a) => a[`c${chapter}Recruitment`] === 'some' };
+  return { id: `c${chapter}RecruitDetail`, type: 'multi', text: 'WHO FOLLOWED?', options: RECRUIT_NAMES[chapter], when: (a) => a[`c${chapter}Recruitment`] === 'some' };
 }
 
 const saved = loadState();
@@ -188,7 +188,7 @@ function layout(content, extraClass = '') {
       </button>
     </header>
     <main class="stage ${extraClass}">${content}</main>
-    <footer><span>UNOFFICIAL FAN TOOL</span><span>YOUR HISTORY NEVER LEAVES THIS DEVICE</span><span class="footer-key">↑↓ SELECT&nbsp;&nbsp; Z CONFIRM</span></footer>
+    <footer><span>UNOFFICIAL FAN TOOL</span><span>YOUR RESPONSES NEVER LEAVE THIS DEVICE</span><span class="footer-key">↑↓ SELECT&nbsp;&nbsp; Z CONFIRM</span></footer>
     <div class="scanlines" aria-hidden="true"></div>`;
   bindGlobalActions();
 }
@@ -513,12 +513,12 @@ function renderSummary() {
   layout(`<section class="summary-shell">
     <div class="summary-number">0${chapter}</div>
     <p class="kicker">CHAPTER ${chapter} COMPLETE</p>
-    <h1>WE REMEMBER.</h1>
+    <h1>THE RECORD<br>IS COMPLETE.</h1>
     <div class="memory-facts">${facts.map((fact) => `<p>${fact}</p>`).join('')}</div>
-    <p class="history-question">IS THIS<br>YOUR HISTORY?</p>
+    <p class="history-question">IS THIS THE HISTORY<br>YOU SHAPED?</p>
     <div class="summary-actions">
       <button class="choice primary" data-action="accept"><span class="soul">♥</span>YES</button>
-      <button class="choice" data-action="review"><span class="soul">♥</span>CHANGE SOMETHING</button>
+      <button class="choice" data-action="review"><span class="soul">♥</span>CHANGE A RESPONSE</button>
     </div>
     <div class="review-drawer" hidden><div class="drawer-head"><span>RECORDED MEMORIES</span><button data-action="close-review">CLOSE ×</button></div>${answerRows}</div>
   </section>`, 'summary-stage');
@@ -542,14 +542,14 @@ function summaryFacts(chapter) {
   ];
   if (chapter === 2) return [
     `NOELLE WAS <strong>${a.c2Frozen === 'yes' ? 'MADE STRONGER' : 'SAFE'}</strong>.`,
-    `<strong>${(a.c2Recruitment || 'NO').toUpperCase()}</strong> DARKNERS FOLLOWED YOU HOME.`,
+    `THE DARKNERS REACHED CASTLE TOWN <strong>${a.c2Recruitment === 'all' ? 'IN FULL' : a.c2Recruitment === 'some' ? 'IN PART' : 'NOT AT ALL'}</strong>.`,
     `THE SALESMAN <strong>${a.c2Strings === 'mercy' ? 'WAS FREED' : a.c2Strings === 'violence' ? 'REMAINED A PUPPET' : 'WAS LEFT BEHIND'}</strong>.`,
     `YOU HAVE FOUND <strong>${shadowCount(a, 2)}</strong> SHADOW CRYSTALS.`,
   ];
   if (chapter === 3) return [
-    `THE PERFORMERS <strong>${a.c3Recruitment === 'all' ? 'ALL CAME WITH YOU' : a.c3Recruitment === 'some' ? 'FOLLOWED IN PART' : 'DID NOT FOLLOW'}</strong>.`,
+    `THE PERFORMERS <strong>${a.c3Recruitment === 'all' ? 'ARRIVED IN FULL' : a.c3Recruitment === 'some' ? 'ARRIVED IN PART' : 'DID NOT ARRIVE'}</strong>.`,
     `THE KNIGHT WAS <strong>${a.c3Knight === 'yes' ? 'DEFEATED' : 'LEFT UNBEATEN'}</strong>.`,
-    `THE SHOW LEFT <strong>${a.c3Hurt === 'yes' ? 'SOMEONE HURT' : 'NO ONE LOST'}</strong>.`,
+    `THE SHOW LEFT <strong>${a.c3Hurt === 'yes' ? 'SOMEONE HURT' : 'NO ONE HURT'}</strong>.`,
   ];
   if (chapter === 4) return [
     `FOUR. YOU HAVE COME <strong>FAR</strong>.`,
@@ -708,13 +708,13 @@ function renderFinal() {
       <p>YOU ${a.c1Beds === 'yes' ? '' : 'NEVER '}INSPECTED THE BEDS.</p>
       <p>YOU ${a.c1StarwalkerBack === 'yes' ? 'REMEMBERED' : 'FORGOT'}<br>THE STARWALKER.</p>
       <p class="long-pause">...</p>
-      <p>THERE ARE MANY MORE<br>QUESTIONS WE COULD<br>HAVE ASKED.</p>
-      <p>FORTUNATELY,<br>WE BELIEVE<br>THIS IS ENOUGH.</p>
+      <p>THERE ARE MANY MORE<br>QUESTIONS I COULD<br>HAVE ASKED.</p>
+      <p>FORTUNATELY,<br>I BELIEVE<br>THIS IS ENOUGH.</p>
     </div>
     <div class="final-decision">
-      <p>THIS PERSON HAS MADE<br>ALL OF THESE CHOICES.</p>
-      <p>THIS PERSON HAS LIVED<br>THIS HISTORY.</p>
-      <h1>SO TELL US, ${name}.<br><br>IS THIS YOU?</h1>
+      <p>KRIS HAS LIVED<br>THIS HISTORY.</p>
+      <p>YOU HAVE SHAPED<br>ALL OF THESE CHOICES.</p>
+      <h1>SO TELL ME, ${name}.<br><br>DO YOU ACCEPT<br>WHAT YOU CREATED?</h1>
       <div class="summary-actions"><button class="choice primary" data-action="final-yes"><span class="soul">♥</span>YES</button><button class="choice" data-action="final-no"><span class="soul">♥</span>NO</button></div>
     </div>
   </section>`, 'final-stage');
@@ -727,7 +727,7 @@ function renderFinalDownload() {
   layout(`<section class="download-shell final-download">
     <div class="sigil small" aria-hidden="true"><span></span><i></i></div>
     <p class="kicker">EXCELLENT.</p>
-    <h1>YOUR PAST<br>HAS BEEN RESTORED.</h1>
+    <h1>THE PAST<br>HAS BEEN RESTORED.</h1>
     <p class="epilogue">FROM THIS POINT FORWARD,<br>YOUR CHOICES ARE YOUR OWN.<br><br>...<br><br>AREN'T THEY?</p>
     <div class="slot-picker"><span>SAVE SLOT</span>${[1, 2, 3].map((slot) => `<button class="${state.selectedSlot === slot ? 'selected' : ''}" data-slot="${slot}">${slot}</button>`).join('')}</div>
     <button class="download-button" data-action="download"><span>↓</span><strong>DOWNLOAD CHAPTER 5 FILE</strong><small>filech5_${fileIndex}${isWeirdEnding() ? '_b' : ''}</small></button>
