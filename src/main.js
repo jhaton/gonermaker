@@ -524,12 +524,13 @@ function editAnswer(id) {
 
 function acceptChapter() {
   if (!state.completed.includes(state.chapter)) state.completed.push(state.chapter);
-  persist(); state.mode = state.chapter === 5 ? 'final' : 'download'; render();
+  persist(); state.mode = 'download'; render();
 }
 
 function renderDownload() {
   const chapter = state.chapter;
   const fileIndex = state.selectedSlot + 2;
+  const nextLabel = chapter === 5 ? 'CONTINUE TO FINAL REVIEW' : `CONTINUE TO CHAPTER ${chapter + 1}`;
   layout(`<section class="download-shell">
     <div class="file-orbit" aria-hidden="true"><span class="file-icon"><i></i><b>FILE</b></span><span class="orbit one"></span><span class="orbit two"></span></div>
     <p class="kicker">HISTORY RESTORED</p>
@@ -537,12 +538,17 @@ function renderDownload() {
     <div class="slot-picker"><span>SAVE SLOT</span>${[1, 2, 3].map((slot) => `<button class="${state.selectedSlot === slot ? 'selected' : ''}" data-slot="${slot}">${slot}</button>`).join('')}</div>
     <button class="download-button" data-action="download"><span>↓</span><strong>DOWNLOAD CHAPTER ${chapter} FILE</strong><small>filech${chapter}_${fileIndex}${chapter === 5 && isWeirdEnding() ? '_b' : ''}</small></button>
     <p class="download-status" aria-live="polite">${state.downloaded ? `FILE CREATED: ${state.downloaded}` : 'PC / MAC / LINUX · PLAIN SAVE DATA'}</p>
-    <button class="continue-chapter" data-action="next">CONTINUE TO CHAPTER ${chapter + 1} <span>→</span></button>
+    <button class="continue-chapter" data-action="next">${nextLabel} <span>→</span></button>
     <p class="backup-note">BACK UP YOUR SAVE DIRECTORY BEFORE REPLACING A FILE.</p>
   </section>`, 'download-stage');
   app.querySelectorAll('[data-slot]').forEach((button) => button.addEventListener('click', () => { state.selectedSlot = Number(button.dataset.slot); persist(); render(); }));
   app.querySelector('[data-action="download"]').addEventListener('click', () => { state.downloaded = downloadCompletion(chapter, state.selectedSlot, state.answers); render(); });
-  app.querySelector('[data-action="next"]').addEventListener('click', () => { state.chapter += 1; state.index = 0; state.introIndex = 0; state.mode = 'intro'; state.downloaded = null; persist(); render(); });
+  app.querySelector('[data-action="next"]').addEventListener('click', () => {
+    state.index = 0; state.introIndex = 0;
+    if (chapter === 5) state.mode = 'final';
+    else { state.chapter += 1; state.mode = 'intro'; state.downloaded = null; }
+    persist(); render();
+  });
 }
 
 function isWeirdEnding() { return answer('c2Frozen') === 'yes' && answer('c4Weird') === 'continue' && answer('c5Route') !== 'stop'; }
